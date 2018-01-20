@@ -13,6 +13,7 @@ const puppeteer = require('puppeteer'),
   semver = require('semver'),
   notifier = require('node-notifier');
 
+// TODO configuration
 const LTS = '8';
 const LAST = '9';
 
@@ -78,8 +79,6 @@ const scrape = async () => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
 
-  //page.on('console', console.log);
-
   await page.goto('http://nodejs.org/en');
 
   const result = await page.evaluate(() => {
@@ -106,9 +105,7 @@ scrape()
     getNodeVersion()
       .then((v) => {
         const currentVersion = v.stdout.replace('\n', '');
-        console.log('currentVersion = ', currentVersion);
         value.forEach((version) => {
-          console.log('Version ', version);
           const compare = compareVersion(version, currentVersion);
           if(compare != null) {
             if (compare.compareLt) {
@@ -134,5 +131,5 @@ scrape()
       });
   })
   .catch((error) => {
-    console.log(error);
+    throw new Error(error);
   });
