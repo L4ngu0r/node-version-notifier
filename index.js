@@ -1,6 +1,6 @@
 /*************************************************************
  *
- * Copyright (c) 2017 languor.fr
+ * Copyright (c) 2018 languor.fr
  *
  * @github L4ngu0r
  *
@@ -10,10 +10,11 @@ const puppeteer = require('puppeteer'),
   {promisify} = require('util'),
   child_process = require('child_process'),
   exec = promisify(child_process.exec),
-  semver = require('semver');
+  semver = require('semver'),
+  notifier = require('node-notifier');
 
-const LTS = '6';
-const LAST = '8';
+const LTS = '8';
+const LAST = '9';
 
 /**
  * Get the current version of Node on local machine
@@ -32,10 +33,12 @@ const getNodeVersion = async () => {
 const compareBloc = (current, local) => {
   const compareLt = semver.lt(current, local);
   const compareEq = semver.eq(current, local);
+  const compareGt = semver.gt(current, local);
 
   return {
     compareLt: compareLt,
     compareEq: compareEq,
+    compareGt: compareGt
   }
 };
 
@@ -106,7 +109,27 @@ scrape()
         console.log('currentVersion = ', currentVersion);
         value.forEach((version) => {
           console.log('Version ', version);
-          console.log(compareVersion(version, currentVersion));
+          const compare = compareVersion(version, currentVersion);
+          if(compare != null) {
+            if (compare.compareLt) {
+              // Lower than
+            } else if (compare.compareEq) {
+              notifier.notify({
+                title: 'Node Version Checker',
+                message: 'Local version is up to date!'
+              });
+            } else if (compare.compareGt) {
+              const message = `You can update to a newer version (${version}) ! Your local version : ${currentVersion}`;
+              notifier.notify({
+                title: 'Node Version Checker',
+                message: message
+              });
+            } else {
+              // ?
+            }
+          } else {
+            // Not eligible
+          }
         });
       });
   })
