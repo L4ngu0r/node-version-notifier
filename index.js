@@ -1,11 +1,3 @@
-/*************************************************************
- *
- * Copyright (c) 2018 languor.fr
- *
- * @github L4ngu0r
- *
- *************************************************************/
-
 const puppeteer = require('puppeteer'),
   {promisify} = require('util'),
   child_process = require('child_process'),
