@@ -1,5 +1,7 @@
 ## Node version notifier
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/L4ngu0r/node-version-notifier.svg)](https://greenkeeper.io/)
+
 Check if you have the latest version of Node (LTS or latest)
 
 #### How it works
