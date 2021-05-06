@@ -7,7 +7,7 @@
   },
   "author": "L4ngu0r",
   "dependencies": {
-    "node-notifier": "^5.2.1",
+    "node-notifier": "^8.0.1",
     "puppeteer": "^1.13.0",
     "semver": "^5.4.1"
   }
