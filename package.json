@@ -9,6 +9,6 @@
   "dependencies": {
     "node-notifier": "^5.2.1",
     "puppeteer": "^1.13.0",
-    "semver": "^5.4.1"
+    "semver": "^5.7.2"
   }
 }
